@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CategoryMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		product_category
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		CATEGORY_ID,	
+		CATEGORY_NAME,	
+		CATEGORY_TYPE,	
+		CATEGORY_FTYPE,	
+		CREATE_TIME,	
+		REMARK,	
+		CREATE_BY
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{CATEGORY_ID},	
+		#{CATEGORY_NAME},	
+		#{CATEGORY_TYPE},	
+		#{CATEGORY_FTYPE},	
+		#{CREATE_TIME},	
+		#{REMARK},	
+		#{CREATE_BY}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+			CATEGORY_ID,	
+			CATEGORY_NAME,	
+			CATEGORY_TYPE,	
+			CATEGORY_FTYPE,	
+			CREATE_TIME,	
+			REMARK,	
+			CREATE_BY
+		) values (
+			#{CATEGORY_ID},	
+			#{CATEGORY_NAME},	
+			#{CATEGORY_TYPE},	
+			'0',	
+			#{CREATE_TIME},	
+			#{REMARK},	
+			#{CREATE_BY}
+		)
+	</insert>
+	
+	<!-- 查询当前最大的类目号+1并赋值-->
+	<select id="findMaxTypeNum" resultType="int">
+		select MAX(category_type)+1 from product_category
+	</select>
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			CATEGORY_ID = #{CATEGORY_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			CATEGORY_NAME = #{CATEGORY_NAME},
+			<!-- CATEGORY_TYPE = #{CATEGORY_TYPE}, -->
+			CATEGORY_FTYPE = #{CATEGORY_FTYPE},
+			REMARK = #{REMARK},
+		CATEGORY_ID = CATEGORY_ID
+		where 
+		CATEGORY_ID = #{CATEGORY_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			CATEGORY_ID = #{CATEGORY_ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+			c.CATEGORY_ID,	
+			c.CATEGORY_NAME,	
+			c.CATEGORY_TYPE,	
+			c.CATEGORY_FTYPE,	
+			c.CREATE_TIME,	
+			c.REMARK,	
+			c.CREATE_BY,
+			u.NAME GOODNAME,
+			u.USERNAME
+		from 
+			product_category c
+		inner join 
+			SYS_USER u
+		on c.CREATE_BY=u.USERNAME  
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					CATEGORY_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+		order by CATEGORY_TYPE
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		order by CATEGORY_TYPE
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			CATEGORY_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

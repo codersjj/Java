@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MasterMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		order_master
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		ORDER_ID,	
+		BUYER_NAME,	
+		BUYER_PHONE,	
+		BUYER_GOTIME,	
+		BUYER_OPENID,	
+		ORDER_AMOUNT,	
+		ORDER_STATUS,	
+		CREATE_TIME,	
+		REMARK,	
+		CREATE_BY,
+		ORDER_NUM
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ORDER_ID},	
+		#{BUYER_NAME},	
+		#{BUYER_PHONE},	
+		#{BUYER_GOTIME},	
+		#{BUYER_OPENID},	
+		#{ORDER_AMOUNT},	
+		#{ORDER_STATUS},	
+		#{CREATE_TIME},	
+		#{REMARK},	
+		#{CREATE_BY},
+		#{ORDER_NUM}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	ORDER_ID,	
+		BUYER_NAME,	
+		BUYER_PHONE,	 
+		BUYER_GOTIME,	
+		BUYER_OPENID,	
+		ORDER_AMOUNT,	
+		ORDER_STATUS,	
+		CREATE_TIME,	
+		REMARK,	
+		CREATE_BY,
+		ORDER_NUM 
+		) values (
+	#{ORDER_ID},	
+		#{BUYER_NAME},	
+		#{BUYER_PHONE},	
+		#{BUYER_GOTIME},	
+		#{BUYER_OPENID},	
+		#{ORDER_AMOUNT},	
+		#{ORDER_STATUS},	
+		#{CREATE_TIME},	
+		#{REMARK},	
+		#{CREATE_BY},
+		#{ORDER_NUM}
+		)
+	</insert>
+	
+	
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ORDER_ID = #{ORDER_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			BUYER_NAME = #{BUYER_NAME},
+			BUYER_PHONE = #{BUYER_PHONE},
+			BUYER_OPENID = #{BUYER_OPENID},
+			ORDER_AMOUNT = #{ORDER_AMOUNT},
+			REMARK = #{REMARK}
+		where 
+		ORDER_ID = #{ORDER_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ORDER_ID = #{ORDER_ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ORDER_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+		
+	<!-- 根据openId查出所有订单 -->
+	<select id="findOrderIdsByOpenId" parameterType="pd" resultType="pd">
+		select * from order_master 
+			where buyer_openId=#{openId} <!-- #{openId}为用户的openId -->
+			 and 
+			 	  BUYERISDELETE = 0  
+			 <if test="timeName!=null and timeName != '-1'">
+				<if test="timeName=='day'">
+					and DATE_FORMAT(create_time,'%Y-%m-%d') = CURDATE()
+				</if>
+				<if test="timeName=='week'">
+					and create_time >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) 
+				</if>
+				<if test="timeName=='month'">
+					and create_time >= DATE_SUB(CURDATE(), INTERVAL 1 month) 
+				</if>
+			</if>	  
+			 	  order by create_time DESC
+	</select>
+	
+	<!-- 修改订单状态 用户的指定订单删除 -->
+	<update id="updateBuyerIsDelete" parameterType="string">
+		update order_master set buyerisdelete='1' 
+		       where order_id=#{orderid}
+	</update>
+	
+	<!-- 修改订单状态 用户的订单全部删除 -->
+	<update id="deleteAllState" parameterType="string">
+		update order_master set buyerisdelete='1' where buyer_openId = #{openId}
+	</update>
+	
+	<!-- 根据订单号查出到店时间 -->
+	<select id="findGoTimeByOrderId" resultType="string" parameterType="string">
+		select buyer_goTime from order_master where order_ID = #{orderId}
+	</select>
+	
+	<!--取消订单 符合时间条件20分钟 则删除订单  -->
+	<delete id="cancelMaster" parameterType="string">
+		delete from order_master where order_id = #{orderId}
+	</delete>
+</mapper>
