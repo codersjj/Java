@@ -10,19 +10,14 @@ public class Test0 {
 		int num2 = in.nextInt();
 		System.out.println(num1 + "/" + num2 + "=" + num1 / num2);
 		System.out.println("感谢使用本程序！");*/
-		try{
-			int[] nums = new int[2];
-			System.out.println(nums[7]);
-		}catch(ArrayIndexOutOfBoundsException e){
-			e.printStackTrace();
-			System.out.println("*******");
-			System.out.println(e.getMessage());
-		}
+		String s = null;
+		System.out.println(s.equals("qq"));
 //		运行结果：
-//			java.lang.ArrayIndexOutOfBoundsException: 7
-//				at Test0.main(Test0.java:15)
-//			*******
-//			7
-//		可以看到，getMessage()获得的是冒号后面的内容。
+//			Exception in thread "main" java.lang.NullPointerException
+//				at Test0.main(Test0.java:14)
+//		分析：空指针异常。一般在某一对象被赋空值（null）后，再去操作这个对象，就可能发生空指针异常。
+//			某一对象只是声明而没有new时，此对象就是空的（null）。
+//			还有一些对象是需要外界给它赋值的，如果外界没有赋值给它，它就是null的，也会出现空指针异常。
+
 	}
 }
