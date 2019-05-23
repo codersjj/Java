@@ -14,14 +14,16 @@ public class Test3 {
 		}catch(InputMismatchException e){ 
 			System.err.println("出现了错误操作！");
 			e.printStackTrace();
+		}finally{
+			System.out.println("感谢使用本程序！");
 		}
-		System.out.println("感谢使用本程序！");
 	}
 }
 
-//	若try内的异常类型和catch后的类型不匹配，则会中断程序，catch代码块后的代码也不会执行。
+//	加上finally后，不管发不发生异常，程序都会执行finally块。不执行的唯一情况是在finally块前退出了JVM。
 //	运行结果：
 //		请输入被除数：100
 //		请输入除数：0
+//		感谢使用本程序！
 //		Exception in thread "main" java.lang.ArithmeticException: / by zero
 //			at Test3.main(Test3.java:13)
