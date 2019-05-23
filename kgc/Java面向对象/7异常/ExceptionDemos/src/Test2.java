@@ -16,7 +16,9 @@ public class Test2 {
 		}catch(ArithmeticException e){ // 异常对象的名字可以自定义，这里取名为e。
 			System.err.println("出现了错误操作！");
 			//异常对象e   printStackTrace()：打印异常堆栈信息
-			e.printStackTrace();
+//			e.printStackTrace();
+			//获得异常的字符串提示信息，并打印出来。注意：并不是所有的异常都有字符串描述信息，没有的getMessage()内容为null。
+			System.out.println(e.getMessage());
 		}
 		System.out.println("感谢使用本程序！");
 	}
