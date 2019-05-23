@@ -13,7 +13,7 @@ public class Test2 {
 			System.out.print("请输入除数：");
 			int num2 = in.nextInt();
 			System.out.println(num1 + "/" + num2 + "=" + num1 / num2);
-		}catch(ArithmeticException e){ 
+		}catch(ArithmeticException e){ // 异常对象的名字可以自定义，这里取名为e。
 			System.err.println("出现了错误操作！");
 			//异常对象e   printStackTrace()：打印异常堆栈信息
 			e.printStackTrace();
@@ -45,3 +45,18 @@ public class Test2 {
 //		at java.util.Scanner.nextInt(Scanner.java:2160)
 //		at java.util.Scanner.nextInt(Scanner.java:2119)
 //		at Test2.main(Test2.java:14)
+
+//	总结：
+//	try{
+//	}catch(异常Exception或者Exception的子类){
+//	}
+//	（1）无异常：try->catch后面的代码
+//	（2）有异常，且和catch后面的异常类型匹配：try->catch里面的代码->catch后面的代码
+//	（3）有异常，但和catch后面的异常类型不匹配：try->中断程序
+//	联系生活举例：
+//	try{
+//	坐地铁
+//	}catch(危险品){
+//	禁止坐地铁
+//	}
+//	到家吃饭
