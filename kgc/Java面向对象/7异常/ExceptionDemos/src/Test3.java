@@ -15,17 +15,18 @@ public class Test3 {
 			System.err.println("出现了错误操作！");
 			e.printStackTrace();
 			// 退出JVM   exit()只要传一个非零的int类型值即可
-			System.exit(7);
+//			System.exit(7);
+			return;
 		}finally{
 			System.out.println("感谢使用本程序！");
 		}
 	}
 }
 
-//	加上finally后不执行的唯一情况是在finally块前退出了JVM。
+//	catch块中若有return，执行到return时不会直接退出方法，而会先执行finally，之后再执行return，退出方法。
 //	运行结果：
 //		请输入被除数：100
-//		请输入除数：q
+//		请输入除数：b
 //		出现了错误操作！
 //		java.util.InputMismatchException
 //			at java.util.Scanner.throwFor(Scanner.java:909)
@@ -33,3 +34,4 @@ public class Test3 {
 //			at java.util.Scanner.nextInt(Scanner.java:2160)
 //			at java.util.Scanner.nextInt(Scanner.java:2119)
 //			at Test3.main(Test3.java:12)
+//		感谢使用本程序！
