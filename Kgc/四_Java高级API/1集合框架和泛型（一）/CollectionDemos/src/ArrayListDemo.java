@@ -16,6 +16,7 @@ public class ArrayListDemo {
 		list.add(title2);
 		list.add(title3);
 		list.add(title4);
+		list.add(1, title5); // 在指定位置插入元素
 		
 		//size()为获取集合的长度（Returns the number of elements in this list.）
 		System.out.println("新闻标题的总数：" + list.size());
@@ -33,5 +34,21 @@ public class ArrayListDemo {
 			NewsTitle title = (NewsTitle)obj;
 			System.out.println(title.getTitle());
 		}
+		
+		System.out.println("*******");
+		
+		//contains()、remove()
+		System.out.println(list.contains(title1));
+		//删除一条
+		list.remove(title1);
+		System.out.println(list.contains(title1));
+		//打印删除后的list长度
+		System.out.println(list.size());
+		System.out.println("*******");
+		//清空集合
+		list.clear();
+		System.out.println(list.size());
+		//判断集合是否为空
+		System.out.println(list.isEmpty());
 	}
 }
