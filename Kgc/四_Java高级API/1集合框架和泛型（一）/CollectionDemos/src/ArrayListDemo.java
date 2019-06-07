@@ -12,7 +12,7 @@ public class ArrayListDemo {
 		NewsTitle title5 = new NewsTitle(5, "南京下雨了5", "admin");
 		
 		ArrayList list = new ArrayList();
-//		List list = new ArrayList(); // 父类引用指向子类对象（可以用，但这样写就只能调用List和ArrayList公有的方法，而不能调用子类特有的方法）
+//		List list = new ArrayList(); // 父类引用指向子类对象（可以用，但这样写就只能调用List和ArrayList共有的方法，而不能调用子类特有的方法）
 		
 		//添加元素到集合中
 		//集合里存的是对象（如果是基本数据类型，会被包装成对象）
