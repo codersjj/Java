@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 //新闻管理
@@ -25,6 +26,10 @@ public class ArrayListDemo {
 		//size()为获取集合的长度（Returns the number of elements in this list.）
 		System.out.println("新闻标题的总数：" + list.size());
 		
+		/* 遍历有序的集合，可以使用三个的方式：
+		 * （1）普通for，遍历索引
+		 * （2）增强型for
+		 * （3）iterator迭代器 */
 		//遍历list，取出每条新闻标题的题目
 		for(int i = 0; i < list.size(); i++){
 			NewsTitle title = (NewsTitle)list.get(i);
@@ -37,6 +42,15 @@ public class ArrayListDemo {
 		for(Object obj : list){
 			NewsTitle title = (NewsTitle)obj;
 			System.out.println(title.getTitle());
+		}
+		
+		System.out.println("*******");
+		
+		// iterator方法遍历
+		Iterator itor = list.iterator();
+		while(itor.hasNext()){
+			NewsTitle title = (NewsTitle)itor.next();
+			System.out.println(title.getId() + "-" + title.getTitle());
 		}
 		
 		System.out.println("*******");

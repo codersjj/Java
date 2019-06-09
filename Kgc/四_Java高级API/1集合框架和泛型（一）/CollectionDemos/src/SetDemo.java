@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 //测试Set的使用
@@ -29,7 +30,14 @@ public class SetDemo {
 			NewsTitle title = (NewsTitle)obj;
 			System.out.println(title.getId() + "-" + title.getTitle());
 		}
+		System.out.println("*******");
 		
-		// 
+		// 使用迭代器遍历
+		Iterator itor = set.iterator(); // 获得迭代器itor
+		// 通过迭代器迭代出集合元素
+		while(itor.hasNext()){
+			NewsTitle title = (NewsTitle)itor.next();
+			System.out.println(title.getId() + "-" + title.getTitle());
+		}
 	}
 }
