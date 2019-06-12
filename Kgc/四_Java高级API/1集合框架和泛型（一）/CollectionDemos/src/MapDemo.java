@@ -62,5 +62,17 @@ public class MapDemo {
 			String value = (String)countries.get(key);
 			System.out.println(key + "-" + value);
 		}
+		
+		System.out.println("*******");
+		// （2）先拿到Map中的键值对，然后再在每个键值对中分别取出键和值
+		Set ms = countries.entrySet(); // entrySet()拿到的是Map中所有键值对的集合，返回的是Set。
+		for(Object obj : ms){ // 拿出来的每一个键值对类型实际上是Map.Entry类型的，但因为这里没有用泛型，所以类型定义为Object类型，下面再转换为Map.Entry类型。
+			Map.Entry me = (Map.Entry)obj; // Map中的每一个键值对（Map.Entry类型）
+			Object key = me.getKey(); // 取出每个键值对中的键
+			Object value = me.getValue(); // 取出每个键值对中的值
+			System.out.println((String)key + "-" + (String)value);
+		}
+		
+		
 	}
 }
