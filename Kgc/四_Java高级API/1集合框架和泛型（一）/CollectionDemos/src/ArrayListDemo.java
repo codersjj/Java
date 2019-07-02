@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+//import java.util.List;
 
 //新闻管理
 public class ArrayListDemo {
@@ -12,7 +12,7 @@ public class ArrayListDemo {
 		NewsTitle title4 = new NewsTitle(4, "南京下雨了4", "admin");
 		NewsTitle title5 = new NewsTitle(5, "南京下雨了5", "admin");
 		
-		ArrayList list = new ArrayList();
+		ArrayList<NewsTitle> list = new ArrayList<NewsTitle>();
 //		List list = new ArrayList(); // 父类引用指向子类对象（可以用，但这样写就只能调用List和ArrayList共有的方法，而不能调用子类特有的方法）
 		
 		//添加元素到集合中
@@ -32,24 +32,24 @@ public class ArrayListDemo {
 		 * （3）iterator迭代器 */
 		//遍历list，取出每条新闻标题的题目
 		for(int i = 0; i < list.size(); i++){
-			NewsTitle title = (NewsTitle)list.get(i);
+			NewsTitle title = list.get(i);
 			System.out.println(title.getTitle());
 		}
 		
 		System.out.println("*******");
 		
 		//增强型for循环
-		for(Object obj : list){
-			NewsTitle title = (NewsTitle)obj;
+		for(NewsTitle obj : list){
+			NewsTitle title = obj;
 			System.out.println(title.getTitle());
 		}
 		
 		System.out.println("*******");
 		
 		// iterator方法遍历
-		Iterator itor = list.iterator();
+		Iterator<NewsTitle> itor = list.iterator();
 		while(itor.hasNext()){
-			NewsTitle title = (NewsTitle)itor.next();
+			NewsTitle title = itor.next();
 			System.out.println(title.getId() + "-" + title.getTitle());
 		}
 		

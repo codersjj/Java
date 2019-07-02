@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Test {
 	public static void main(String[] args) {
-		Map students = new HashMap();
+		Map<String, Student> students = new HashMap<String, Student>();
 		Student s1 = new Student("张三", "男");
 		Student s2 = new Student("李四", "男");
 		Student s3 = new Student("王五", "女");
@@ -21,7 +21,7 @@ public class Test {
 		Scanner input = new Scanner(System.in);
 		String key = input.next();
 		if(students.containsKey(key)){
-			Student stu = (Student)students.get(key);
+			Student stu = students.get(key);
 			System.out.print("您要找的学员是：" + stu.getName() + "-" + stu.getSex());
 		}else{
 			System.out.println("对不起，没有您要寻找的学员！");
