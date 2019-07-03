@@ -1,6 +1,6 @@
 package cn.kgc.collectionsdemo;
 
-public class Student {
+public class Student implements Comparable {
 	// 学号  姓名  性别
 	private int number;
 	private String name;
@@ -38,6 +38,18 @@ public class Student {
 	}
 	public void setNumber(int number) {
 		this.number = number;
+	}
+	// 编写一个比较规则：让当前学员对象（this）和传过来的学员对象（o）进行比较
+	// 以学员学号为比较规则
+	public int compareTo(Object o) {
+		Student stu = (Student)o;
+		if(this.number == stu.number){
+			return 0;
+		}else if(this.number > stu.number){
+			return 1;
+		}else{
+			return -1;
+		}
 	}
 	
 	
