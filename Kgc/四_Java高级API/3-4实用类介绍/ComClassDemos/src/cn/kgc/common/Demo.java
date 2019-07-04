@@ -21,6 +21,19 @@ public class Demo {
 		Boolean b2 = new Boolean("love");
 //		Character c2 = new Character("a"); // 编译错误
 		
-		System.out.print(i2 + "\t" + d2 + "\t" + b2);
+		System.out.println(i2 + "\t" + d2 + "\t" + b2);
+		
+		// valueOf()：（1）把基本数据类型变为包装类
+		Integer i3 = Integer.valueOf(2);
+		Character c3 = Character.valueOf('z');
+		Boolean b3 = Boolean.valueOf(true);
+		
+		// valueOf()：（2）把字符串变为包装类
+		Integer i4 = Integer.valueOf("2");
+//		Character c4 = Character.valueOf("a"); // 编译报错
+		Boolean b4 = Boolean.valueOf("true");
+		Boolean b5 = Boolean.valueOf("love");
+		System.out.println(b4 + "---" + b5);
+		
 	}
 }
