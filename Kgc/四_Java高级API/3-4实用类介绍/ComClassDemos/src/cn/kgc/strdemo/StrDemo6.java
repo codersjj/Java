@@ -17,19 +17,23 @@ public class StrDemo6 {
 		}*/
 		
 		Scanner input = new Scanner(System.in);
-		System.out.println("请输入一个带“-”的字符串（每个字符用“-”隔开，如：我-爱-你-中-国）：");
+		System.out.println("请输入一个字符串：");
 		String info = input.next();
 		System.out.println("请输入您要查询的字符：");
 		String want = input.next();
-		String[] splitedInfos = info.split("-");
+//		String[] splitedInfos = info.split("-");
+		String[] splitedInfos = new String[info.length()];
+		
 		// 特定字符出现的次数
 		int count = 0;
 		for (int i = 0; i < splitedInfos.length; i++) {
+			splitedInfos[i] = info.substring(i, i + 1);
 			if (splitedInfos[i].equals(want)) {
 				count++;
 			}
 		}
-		System.out.println("\"" + want + "\"在\"" + info + "\"中" + "出现的次数为：" + count + "次。");
+
+		System.out.println("\"" + want + "\"在\"" + info + "\"中" + "出现的次数为：" + count + "次。"); // 转义符号：\
 		
 	}
 }
