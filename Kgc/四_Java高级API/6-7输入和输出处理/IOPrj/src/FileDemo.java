@@ -37,12 +37,22 @@ public class FileDemo {
 			System.out.println("文件不存在！");
 		}
 	}
-
+	
+	// 删除文件
+	public void delete(File file){
+		if (file.exists()) {
+			file.delete();
+			System.out.println("文件已删除！");
+		}
+	}
+	
 	public static void main(String[] args){
 		FileDemo fileDemo = new FileDemo();
 //		File file = new File("d:/JJSha/text.txt");
 		File file = new File("test.txt");
-		fileDemo.create(file); // 文件不存在时创建，存在就不执行这句代码
+/*		fileDemo.create(file); // 文件不存在时创建，存在就不执行这句代码
 		fileDemo.showFileInfo(file);
+*/		
+		fileDemo.delete(file);
 	}
 }
