@@ -17,6 +17,14 @@ public class FileInputStreamDemo {
 			while ((data = fis.read()) != -1) {
 				System.out.print((char)data);
 			}
+//			// step3：读取文件内容数据，使用输入流的read(byte[] b)方法
+//			byte[] b = new byte[1024];
+//			int data;
+//			while ((data = fis.read(b)) != -1) {
+//				for (int i = 0; i < data; i++) {
+//					System.out.print((char)b[i]);
+//				}
+//			}
 			// 流读到最后，可以读取到的字节数就为0了。
 			System.out.println("\n可以读取到的字节数：" + fis.available());
 		} catch (FileNotFoundException e) {
