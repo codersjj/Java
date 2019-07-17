@@ -23,6 +23,11 @@ public class InputAndOutputDemo {
 			while ((len = fis.read(words)) != -1) {
 				fos.write(words, 0, len);
 			}
+			// 常见错误：（1）少写了一个字节过来 （2）多写了很多空格过来
+			/*while (fis.read() != -1) {
+				fis.read(words); // 读取文件
+				fos.write(words, 0, words.length); // 写入文件
+			}*/
 			System.out.println("文件复制完成！");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
