@@ -5,6 +5,8 @@ import java.io.IOException;
 // 用字符流将“D:\JJSha\text.txt”读出来
 public class FileReaderDemo {
 	public static void main(String[] args) {
+		// 查看本地平台（这里为MyEclipse）的字符编码类型
+		System.out.println(System.getProperty("file.encoding"));
 		FileReader fr = null;
 		try {
 			fr = new FileReader("D:\\JJSha\\text.txt");
