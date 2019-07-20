@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 // 将读取出来的内容特定部分进行替换
 // 将替换后的新内容重新写入到另外一个文件中
 public class ReaderAndWriterDemo {
-	public static void main(String[] args) {
+	public void copyFile (String oldFile, String newFile) {
 		// 1.1、输入流完成读取功能
 		BufferedReader reader = null;
 		InputStreamReader isr = null;
@@ -23,7 +23,7 @@ public class ReaderAndWriterDemo {
 		try {
 			// 1.2、从源文件中读取
 			// FileInputStream为字节流
-			fis = new FileInputStream("D:\\JJSha\\pet.template");
+			fis = new FileInputStream(oldFile);
 			// 把字节流包成字符流
 			isr = new InputStreamReader(fis, "utf-8");
 			reader = new BufferedReader(isr);
@@ -42,7 +42,7 @@ public class ReaderAndWriterDemo {
 			System.out.println("替换后：" + newStr);
 			
 			// 3.2、将替换后的新内容写入新文件
-			fw = new FileWriter("D:\\JJSha\\newPet.txt"); // 申明写到哪个新文件里
+			fw = new FileWriter(newFile); // 申明写到哪个新文件里
 			bw = new BufferedWriter(fw); // 用带缓存区的字符输出流把FileWriter包起来
 			bw.write(newStr); // 把新的字符串写入新文件中
 			bw.flush(); // 写完后记得把Writer清空缓存区
@@ -64,5 +64,10 @@ public class ReaderAndWriterDemo {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static void main(String[] args) {
+		ReaderAndWriterDemo demo = new ReaderAndWriterDemo();
+		demo.copyFile("D:/JJSha/pet.template", "D:/JJSha/newPet.txt");
 	}
 }
