@@ -9,14 +9,22 @@ public class Movie {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getInfo() {
 		return info;
 	}
-	public void setInfo(String info) {
+	
+	// 同步方法
+	public synchronized void set(String name, String info){
+		this.name = name;
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		this.info = info;
 	}
 	
+	public synchronized void get(){
+		System.out.println(this.getName() + "-" + this.getInfo());
+	}
 }

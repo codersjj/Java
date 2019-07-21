@@ -13,7 +13,7 @@ public class Consumer implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println(this.movie.getName() + "-" + this.movie.getInfo());
+			this.movie.get();
 		}
 	}
 
