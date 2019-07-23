@@ -5,6 +5,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 // 使用DOM解析XML文件
@@ -13,7 +16,7 @@ public class ParseXMLDemo {
 	private Document document;
 	
 	// 获得DOM树，获得Document对象
-	public void getDemo() {
+	public void getDom() {
 		// 获得解析器工厂
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
@@ -28,5 +31,25 @@ public class ParseXMLDemo {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// 获取手机品牌及型号相关信息
+	public void showInfo() {
+		// 以Document做起点，先拿到所有的Brand节点
+		NodeList brands = document.getElementsByTagName("Brand");
+		// 遍历brands，从中拿出每一个Brand
+		for (int i = 0; i < brands.getLength(); i++) {
+			Node node = brands.item(i);
+			Element eleBrand = (Element)node;
+			// 通过属性名获取属性值
+			String brandName = eleBrand.getAttribute("name");
+			System.out.println(brandName);
+		}
+	}
+	
+	public static void main(String[] args){
+		ParseXMLDemo pd = new ParseXMLDemo();
+		pd.getDom();
+		pd.showInfo();
 	}
 }
