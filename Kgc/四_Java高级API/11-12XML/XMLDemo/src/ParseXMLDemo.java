@@ -59,9 +59,24 @@ public class ParseXMLDemo {
 		}
 	}
 	
+	// 为XML文件添加（只是添加到内存里，而没有真正添加到文件中）
+	public void addEle(){
+		// 创建<Brand name="三星">
+		Element brand = document.createElement("Brand");
+		brand.setAttribute("name", "三星");
+		// 创建<Type name="NOTE2">
+		Element type = document.createElement("Type");
+		type.setAttribute("name", "NOTE2");
+		// 将Type作为Brand的子元素
+		brand.appendChild(type);
+		// 将Brand放到PhoneInfo中去
+		document.getElementsByTagName("PhoneInfo").item(0).appendChild(brand);
+	}
+	
 	public static void main(String[] args){
 		ParseXMLDemo pd = new ParseXMLDemo();
 		pd.getDom();
+		pd.addEle();
 		pd.showInfo();
 	}
 }
