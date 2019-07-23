@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <student>
 	<!-- 学生信息 -->
-	<student id="s1"> </student>
+	<!-- “&lt;”代表“<” -->
+	<student id="&lt;s1"> </student>
 	<student id="s2"></student>
 	<student id="s3" />
 	<student id="s4">第4个学生</student>
@@ -10,4 +11,8 @@
 		<age>18</age>
 	</student>
 	<student id="s6" name="王五" age="17" />
+	<test>我们上面的标签包含了&lt;student&gt;&lt;/student&gt;</test>
+	<test>
+		<![CDATA[我们上面的标签包含了<student></student>]]>
+	</test>
 </student>
