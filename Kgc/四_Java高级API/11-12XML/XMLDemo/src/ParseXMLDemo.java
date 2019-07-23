@@ -44,6 +44,18 @@ public class ParseXMLDemo {
 			// 通过属性名获取属性值
 			String brandName = eleBrand.getAttribute("name");
 			System.out.println(brandName);
+			
+			// 继续查找，找每个Brand的子节点出来。
+			NodeList types = eleBrand.getChildNodes();
+			for (int j = 0; j < types.getLength(); j++) {
+				Node typeNode = types.item(j);
+				// 判断该子节点是否为元素节点
+				if (typeNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element typeEle = (Element)typeNode;
+					System.out.println("\t" + typeEle.getAttribute("name"));
+				}
+				
+			}
 		}
 	}
 	
