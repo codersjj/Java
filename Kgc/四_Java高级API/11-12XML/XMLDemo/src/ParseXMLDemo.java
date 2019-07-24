@@ -1,8 +1,18 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -59,7 +69,7 @@ public class ParseXMLDemo {
 		}
 	}
 	
-	// 为XML文件添加（只是添加到内存里，而没有真正添加到文件中）
+	// 为XML文件添加元素（只是添加到内存里，而没有真正添加到文件中）
 	public void addEle(){
 		// 创建<Brand name="三星">
 		Element brand = document.createElement("Brand");
@@ -71,6 +81,31 @@ public class ParseXMLDemo {
 		brand.appendChild(type);
 		// 将Brand放到PhoneInfo中去
 		document.getElementsByTagName("PhoneInfo").item(0).appendChild(brand);
+		saveXML("收藏信息.xml");
+	}
+	
+	// 保存XML文件（需要借助转换器：源（最新的DOM树） --> 目的地（“收藏信息.xml”文件），实际上是借助的输出流实现）
+	public void saveXML(String path){
+		// 转换器工厂
+		TransformerFactory factory = TransformerFactory.newInstance();
+		try {
+			// 转换器
+			Transformer transformer = factory.newTransformer();
+			// 源（最新的DOM树） --> 目的地（“收藏信息.xml”文件）
+			DOMSource source = new DOMSource(document); // 把最新的DOM树（这里的document）作为参数传进去
+			
+			OutputStream out = new FileOutputStream(path); // 字节流
+			StreamResult result = new StreamResult(new OutputStreamWriter(out)); // OutputStreamWriter(out)把字节流包成字符流
+			
+			transformer.transform(source, result);
+			 
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args){
