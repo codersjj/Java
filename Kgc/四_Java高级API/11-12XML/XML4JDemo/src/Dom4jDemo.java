@@ -58,6 +58,20 @@ public class Dom4jDemo {
 		saveXML("newInfo.xml");
 	}
 	
+	// 修改节点
+	public void updatePhone() {
+		// 先把根元素拿到
+		Element root = document.getRootElement();
+		Iterator eleBrands = root.elementIterator();
+		int id = 0;
+		while (eleBrands.hasNext()) {
+			Element brand = (Element)eleBrands.next();
+			id++;
+			brand.addAttribute("id", id + "");
+		}
+		saveXML("newInfo.xml");
+	}
+	
 	// 保存修改到XML文件
 	public void saveXML(String path){
 		// OutputFormat相当于转换器
@@ -88,7 +102,8 @@ public class Dom4jDemo {
 	public static void main(String[] args) {
 		Dom4jDemo domDemo = new Dom4jDemo();
 		domDemo.loadDocument();
-		domDemo.addNewPhone();
+//		domDemo.addNewPhone();
+		domDemo.updatePhone();
 		domDemo.showPhoneInfo();
 	}
 }
