@@ -129,11 +129,29 @@ public class ParseXMLDemo {
 		saveXML("收藏信息.xml");
 	}
 	
+	// 删除  华为手机
+	public void deleteEle() {
+		// 获取所有的Brand
+		NodeList brands = document.getElementsByTagName("Brand");
+		for (int i = 0; i < brands.getLength(); i++) {
+			Node brand = brands.item(i);
+			Element brandEle = (Element)brand;
+			
+			if (brandEle.getAttribute("name").equals("华为")) {
+				// 自己不能删自己，只能通过父节点删除自己。
+				brandEle.getParentNode().removeChild(brandEle);
+			}
+		}
+		// 删除后记得保存文件
+		saveXML("收藏信息.xml");	
+	}
+	
 	public static void main(String[] args){
 		ParseXMLDemo pd = new ParseXMLDemo();
 		pd.getDom();
 //		pd.addEle();
-		pd.updateEle();
+//		pd.updateEle();
+		pd.deleteEle();
 		pd.showInfo();
 	}
 }
