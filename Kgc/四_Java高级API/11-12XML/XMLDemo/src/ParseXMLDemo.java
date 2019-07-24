@@ -3,10 +3,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -20,20 +22,20 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-// Ê¹ÓÃDOM½âÎöXMLÎÄ¼ş
+// ä½¿ç”¨DOMè§£æXMLæ–‡ä»¶
 public class ParseXMLDemo {
-	// ¡°ÊÕ²ØĞÅÏ¢.xml¡±¶ÔÓ¦µÄDocument¶ÔÏó
+	// â€œæ”¶è—ä¿¡æ¯.xmlâ€å¯¹åº”çš„Documentå¯¹è±¡
 	private Document document;
 	
-	// »ñµÃDOMÊ÷£¬»ñµÃDocument¶ÔÏó
+	// è·å¾—DOMæ ‘ï¼Œè·å¾—Documentå¯¹è±¡
 	public void getDom() {
-		// »ñµÃ½âÎöÆ÷¹¤³§
+		// è·å¾—è§£æå™¨å·¥å‚
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
-			// ¸ù¾İ½âÎöÆ÷¹¤³§»ñµÃ½âÎöÆ÷
+			// æ ¹æ®è§£æå™¨å·¥å‚è·å¾—è§£æå™¨
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			// ½âÎöÆ÷À´½âÎöXMLÎÄ¼ş»ñµÃDocument¶ÔÏó
-			document = builder.parse("ÊÕ²ØĞÅÏ¢.xml"); // ÕâÀïĞ´³ÉÁËÏà¶ÔÂ·¾¶£¬Ç°ÌáÊÇ´ËXMLÎÄ¼şÒªÖ±½Ó·ÅÔÚµ±Ç°ÏîÄ¿ÏÂ¡£
+			// è§£æå™¨æ¥è§£æXMLæ–‡ä»¶è·å¾—Documentå¯¹è±¡
+			document = builder.parse("æ”¶è—ä¿¡æ¯.xml"); // è¿™é‡Œå†™æˆäº†ç›¸å¯¹è·¯å¾„ï¼Œå‰ææ˜¯æ­¤XMLæ–‡ä»¶è¦ç›´æ¥æ”¾åœ¨å½“å‰é¡¹ç›®ä¸‹ã€‚
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
@@ -43,23 +45,23 @@ public class ParseXMLDemo {
 		}
 	}
 	
-	// »ñÈ¡ÊÖ»úÆ·ÅÆ¼°ĞÍºÅÏà¹ØĞÅÏ¢
+	// è·å–æ‰‹æœºå“ç‰ŒåŠå‹å·ç›¸å…³ä¿¡æ¯
 	public void showInfo() {
-		// ÒÔDocument×öÆğµã£¬ÏÈÄÃµ½ËùÓĞµÄBrand½Úµã
+		// ä»¥Documentåšèµ·ç‚¹ï¼Œå…ˆæ‹¿åˆ°æ‰€æœ‰çš„BrandèŠ‚ç‚¹
 		NodeList brands = document.getElementsByTagName("Brand");
-		// ±éÀúbrands£¬´ÓÖĞÄÃ³öÃ¿Ò»¸öBrand
+		// éå†brandsï¼Œä»ä¸­æ‹¿å‡ºæ¯ä¸€ä¸ªBrand
 		for (int i = 0; i < brands.getLength(); i++) {
 			Node node = brands.item(i);
 			Element eleBrand = (Element)node;
-			// Í¨¹ıÊôĞÔÃû»ñÈ¡ÊôĞÔÖµ
+			// é€šè¿‡å±æ€§åè·å–å±æ€§å€¼
 			String brandName = eleBrand.getAttribute("name");
 			System.out.println(brandName);
 			
-			// ¼ÌĞø²éÕÒ£¬ÕÒÃ¿¸öBrandµÄ×Ó½Úµã³öÀ´¡£
+			// ç»§ç»­æŸ¥æ‰¾ï¼Œæ‰¾æ¯ä¸ªBrandçš„å­èŠ‚ç‚¹å‡ºæ¥ã€‚
 			NodeList types = eleBrand.getChildNodes();
 			for (int j = 0; j < types.getLength(); j++) {
 				Node typeNode = types.item(j);
-				// ÅĞ¶Ï¸Ã×Ó½ÚµãÊÇ·ñÎªÔªËØ½Úµã
+				// åˆ¤æ–­è¯¥å­èŠ‚ç‚¹æ˜¯å¦ä¸ºå…ƒç´ èŠ‚ç‚¹
 				if (typeNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element typeEle = (Element)typeNode;
 					System.out.println("\t" + typeEle.getAttribute("name"));
@@ -69,33 +71,38 @@ public class ParseXMLDemo {
 		}
 	}
 	
-	// ÎªXMLÎÄ¼şÌí¼ÓÔªËØ£¨Ö»ÊÇÌí¼Óµ½ÄÚ´æÀï£¬¶øÃ»ÓĞÕæÕıÌí¼Óµ½ÎÄ¼şÖĞ£©
+	// ä¸ºXMLæ–‡ä»¶æ·»åŠ å…ƒç´ ï¼ˆåªæ˜¯æ·»åŠ åˆ°å†…å­˜é‡Œï¼Œè€Œæ²¡æœ‰çœŸæ­£æ·»åŠ åˆ°æ–‡ä»¶ä¸­ï¼‰
 	public void addEle(){
-		// ´´½¨<Brand name="ÈıĞÇ">
+		// åˆ›å»º<Brand name="ä¸‰æ˜Ÿ">
 		Element brand = document.createElement("Brand");
-		brand.setAttribute("name", "ÈıĞÇ");
-		// ´´½¨<Type name="NOTE2">
+		brand.setAttribute("name", "ä¸‰æ˜Ÿ");
+		// åˆ›å»º<Type name="NOTE2">
 		Element type = document.createElement("Type");
 		type.setAttribute("name", "NOTE2");
-		// ½«Type×÷ÎªBrandµÄ×ÓÔªËØ
+		// å°†Typeä½œä¸ºBrandçš„å­å…ƒç´ 
 		brand.appendChild(type);
-		// ½«Brand·Åµ½PhoneInfoÖĞÈ¥
+		// å°†Brandæ”¾åˆ°PhoneInfoä¸­å»
 		document.getElementsByTagName("PhoneInfo").item(0).appendChild(brand);
-		saveXML("ÊÕ²ØĞÅÏ¢.xml");
+		saveXML("æ”¶è—ä¿¡æ¯.xml");
 	}
 	
-	// ±£´æXMLÎÄ¼ş£¨ĞèÒª½èÖú×ª»»Æ÷£ºÔ´£¨×îĞÂµÄDOMÊ÷£© --> Ä¿µÄµØ£¨¡°ÊÕ²ØĞÅÏ¢.xml¡±ÎÄ¼ş£©£¬Êµ¼ÊÉÏÊÇ½èÖúµÄÊä³öÁ÷ÊµÏÖ£©
+	// ä¿å­˜XMLæ–‡ä»¶ï¼ˆéœ€è¦å€ŸåŠ©è½¬æ¢å™¨ï¼šæºï¼ˆæœ€æ–°çš„DOMæ ‘ï¼‰ --> ç›®çš„åœ°ï¼ˆâ€œæ”¶è—ä¿¡æ¯.xmlâ€æ–‡ä»¶ï¼‰ï¼Œå®é™…ä¸Šæ˜¯å€ŸåŠ©çš„è¾“å‡ºæµå®ç°ï¼‰
 	public void saveXML(String path){
-		// ×ª»»Æ÷¹¤³§
+		// è½¬æ¢å™¨å·¥å‚
 		TransformerFactory factory = TransformerFactory.newInstance();
+		// è®¾ç½®ç¼©è¿›
+		factory.setAttribute("indent-number", 4);
 		try {
-			// ×ª»»Æ÷
+			// è½¬æ¢å™¨
 			Transformer transformer = factory.newTransformer();
-			// Ô´£¨×îĞÂµÄDOMÊ÷£© --> Ä¿µÄµØ£¨¡°ÊÕ²ØĞÅÏ¢.xml¡±ÎÄ¼ş£©
-			DOMSource source = new DOMSource(document); // °Ñ×îĞÂµÄDOMÊ÷£¨ÕâÀïµÄdocument£©×÷Îª²ÎÊı´«½øÈ¥
+			// æŒ‡å®šè½¬æ¢å™¨æ ¼å¼
+			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+			transformer.setOutputProperty(OutputKeys.INDENT, "YES");
+			// æºï¼ˆæœ€æ–°çš„DOMæ ‘ï¼‰ --> ç›®çš„åœ°ï¼ˆâ€œæ”¶è—ä¿¡æ¯.xmlâ€æ–‡ä»¶ï¼‰
+			DOMSource source = new DOMSource(document); // æŠŠæœ€æ–°çš„DOMæ ‘ï¼ˆè¿™é‡Œçš„documentï¼‰ä½œä¸ºå‚æ•°ä¼ è¿›å»
 			
-			OutputStream out = new FileOutputStream(path); // ×Ö½ÚÁ÷
-			StreamResult result = new StreamResult(new OutputStreamWriter(out)); // OutputStreamWriter(out)°Ñ×Ö½ÚÁ÷°ü³É×Ö·ûÁ÷
+			OutputStream out = new FileOutputStream(path); // å­—èŠ‚æµ
+			StreamResult result = new StreamResult(new OutputStreamWriter(out, "UTF-8")); // OutputStreamWriter(out)æŠŠå­—èŠ‚æµåŒ…æˆå­—ç¬¦æµ
 			
 			transformer.transform(source, result);
 			 
@@ -104,6 +111,8 @@ public class ParseXMLDemo {
 		} catch (TransformerException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 	}
