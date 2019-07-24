@@ -117,10 +117,23 @@ public class ParseXMLDemo {
 		}
 	}
 	
+	// 修改元素
+	public void updateEle(){
+		// 获取所有的Brand
+		NodeList brands = document.getElementsByTagName("Brand");
+		for (int i = 0; i < brands.getLength(); i++) {
+			Node brand = brands.item(i);
+			Element brandEle = (Element)brand;
+			brandEle.setAttribute("id", i + "");
+		}
+		saveXML("收藏信息.xml");
+	}
+	
 	public static void main(String[] args){
 		ParseXMLDemo pd = new ParseXMLDemo();
 		pd.getDom();
-		pd.addEle();
+//		pd.addEle();
+		pd.updateEle();
 		pd.showInfo();
 	}
 }

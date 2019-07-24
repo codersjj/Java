@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <PhoneInfo>
-	<Brand name="华为">
+	<Brand id="0" name="华为">
 		第一款手机   <!-- 文本节点也是子节点 -->
 		<Type name="U8650"/>
 		<Type name="HW123"/>
 		<Type name="HW456"/>
 	</Brand>
-	<Brand name="苹果">
+	<Brand id="1" name="苹果">
 		<Type name="iphone6"/>
 		<Type name="iphone7"/>
 		<Type name="iphone8"/>
 	</Brand>
-<Brand name="三星">
+<Brand id="2" name="三星">
         <Type name="NOTE2"/>
     </Brand>
 </PhoneInfo>
