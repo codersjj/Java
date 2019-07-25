@@ -72,6 +72,20 @@ public class Dom4jDemo {
 		saveXML("newInfo.xml");
 	}
 	
+	// 删除节点
+	public void deletePhone() {
+		// 获取根元素
+		Element root = document.getRootElement();
+		Iterator eleBrands = root.elementIterator();
+		while (eleBrands.hasNext()) {
+			Element brand = (Element)eleBrands.next();
+			if (brand.attributeValue("name").equals("三星")) {
+				brand.getParent().remove(brand);
+			}
+		}
+		saveXML("newInfo.xml");
+	}
+	
 	// 保存修改到XML文件
 	public void saveXML(String path){
 		// OutputFormat相当于转换器
@@ -103,7 +117,8 @@ public class Dom4jDemo {
 		Dom4jDemo domDemo = new Dom4jDemo();
 		domDemo.loadDocument();
 //		domDemo.addNewPhone();
-		domDemo.updatePhone();
+//		domDemo.updatePhone();
+		domDemo.deletePhone();
 		domDemo.showPhoneInfo();
 	}
 }
